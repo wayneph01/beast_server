@@ -174,6 +174,14 @@ handle_request(
 
     // Handle the case where the file doesn't exist
     if(ec == beast::errc::no_such_file_or_directory)
+    {
+        //try sending /index.html for vue Single Page Application
+        path = path_cat(doc_root, "/index.html");
+        body.open(path.c_str(), beast::file_mode::scan, ec);   
+    }
+
+    // Handle the case where the file doesn't exist
+    if(ec == beast::errc::no_such_file_or_directory)
         return not_found(req.target());
 
     // Handle an unknown error
